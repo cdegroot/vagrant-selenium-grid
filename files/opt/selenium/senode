@@ -6,6 +6,7 @@ mkfifo $TMPFIFO
 ( logger -t senode <$TMPFIFO ) &
 exec >&$TMPFIFO
 rm $TMPFIFO
+export DISPLAY=:1
 exec /usr/bin/java -jar /opt/selenium/selenium-server-standalone.jar \
     -role node \
     -hub http://localhost:4444/grid/register \

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+TMPFIFO=/tmp/$$
+
+mkfifo $TMPFIFO
+( logger -t senode <$TMPFIFO ) &
+exec >&$TMPFIFO
+rm $TMPFIFO
+
+exec /usr/bin/java -jar /opt/selenium/selenium-server-standalone.jar \
+    -role hub 

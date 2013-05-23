@@ -1,0 +1,13 @@
+#!/bin/bash
+
+TMPFIFO=/tmp/$$
+
+mkfifo $TMPFIFO
+( logger -t senode <$TMPFIFO ) &
+exec >&$TMPFIFO
+rm $TMPFIFO
+exec /usr/bin/java -jar /opt/selenium/selenium-server-standalone.jar \
+    -role node \
+    -hub http://localhost:4444/grid/register \
+    -browser browserName=firefox,version=3.6,maxInstances=5,platform=LINUX
+

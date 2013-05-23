@@ -12,22 +12,30 @@ class selenium {
   }
 
   file { "/opt/selenium/selenium-server-standalone.jar":
-     require => File['/opt/selenium'],
-     source => "/vagrant/files/selenium-server-standalone-2.33.0.jar",
+     source => "/vagrant/files/opt/selenium/selenium-server-standalone-2.33.0.jar",
   }
 }
 
 class sehub {
   require selenium
 
+  file { "/opt/selenium/sehub":
+      source => "/vagrant/files/opt/selenium/sehub",
+      owner => "root",
+      mode => "0755",
+  }
+
   file { "/etc/init.d/sehub":
-      source => "/vagrant/files/sehub",
+      source => "/vagrant/files/etc/init.d/sehub",
       owner => "root",
       mode => "0755",
   }
 
   service { "sehub":
-    require => File['/etc/init.d/sehub'],
+    require => [ 
+        File['/etc/init.d/sehub'],
+        File['/opt/selenium/sehub']
+    ],
     enable => true,
     ensure => running,
   }
@@ -40,12 +48,17 @@ class senode {
   package { "iceweasel": ensure => present }
   package { "vnc4server": ensure => present }
 
-  file { "/etc/init.d/senode":
-      source => "/vagrant/files/senode",
+  file { "/opt/selenium/senode":
+      source => "/vagrant/files/opt/selenium/senode",
       owner => "root",
       mode => "0755",
   }
 
+  file { "/etc/init.d/senode":
+      source => "/vagrant/files/etc/init.d/senode",
+      owner => "root",
+      mode => "0755",
+  }
 
   user { "senode":
     managehome => true,
@@ -58,13 +71,17 @@ class senode {
   }
 
   service { "senode":
-    require => [File['/etc/init.d/senode'], User['senode']],
+    require => [ 
+        User['senode'],
+        File['/etc/init.d/senode'],
+        File['/opt/selenium/senode']
+    ],
     enable => true,
     ensure => running,
   }
         
   file { "/etc/init.d/senodevnc":
-      source => "/vagrant/files/senodevnc",
+      source => "/vagrant/files/etc/init.d/senodevnc",
       owner => "root",
       mode => "0755",
   }

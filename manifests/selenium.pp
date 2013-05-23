@@ -103,6 +103,7 @@ class senode {
   file { "/home/senode/.vnc/xstartup":
     source => "/vagrant/files/vnc/xstartup",
     owner => "senode",
+    mode => 0755,
     require => File['/home/senode/.vnc'],
   }
 

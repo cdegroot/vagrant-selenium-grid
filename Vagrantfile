@@ -20,5 +20,9 @@ Vagrant::Config.run do |config|
       puppet.manifest_file = "sehub.pp"
       puppet.options = "--verbose --debug"
     end
+
+    # Restart Selenium
+    senodehub.vm.provision "shell",
+      inline: "/etc/init.d/senode stop; /etc/init.d/sehub start; /etc/init.d/senode start"
   end
 end

@@ -16,3 +16,10 @@ Written in 2013 by Cees de Groot <cg@cdegroot.com>
 This software is in the public domain. Please see the file
 UNLICENSE for details.
 
+
+Changes
+=======
+
+Originally forked from https://github.com/cdegroot/vagrant-selenium-grid
+1. This current repo fixes line ending bugs so all commands executed properly.
+2. Updated Selenium to 2.39

@@ -12,7 +12,7 @@ class selenium {
   }
 
   file { "/opt/selenium/selenium-server-standalone.jar":
-     source => "/vagrant/files/opt/selenium/selenium-server-standalone-2.33.0.jar",
+     source => "/vagrant/files/opt/selenium/selenium-server-standalone-2.39.0.jar",
   }
 }
 
